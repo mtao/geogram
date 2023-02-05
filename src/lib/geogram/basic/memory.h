@@ -474,6 +474,7 @@ namespace GEO {
                 typedef aligned_allocator<U> other;
             };
 
+#if __cplusplus < 202002L
             /**
              * \brief Gets the address of an object
              * \param[in] x a reference to an object of type T
@@ -491,6 +492,7 @@ namespace GEO {
             const_pointer address(const_reference x) {
                 return &x;
             }
+#endif
 
             /**
              * \brief Allocates a block of storage
@@ -535,6 +537,7 @@ namespace GEO {
                 aligned_free(p);
             }
 
+#if __cplusplus < 202002L
             /**
              * \brief Gets the maximum size possible to allocate
              * \return the maximum number of elements, each of member type
@@ -576,6 +579,7 @@ namespace GEO {
                 (void) p; // to avoid a "unreferenced variable" warning
 #endif
             }
+#endif
 
             /**
              * \brief Conversion operator to different aligned_allocator
