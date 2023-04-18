@@ -184,8 +184,8 @@ namespace GEO {
          *  and \p p3
          * \param[in] q0 , q1 , q2 vertices of the triangle
          *  (that defines the intersection q)
-	 * \param[in] SOS if true, do the symbolic perturbation in the degenerate
-	 *  case
+	 * \param[in] SOS if true, do the symbolic perturbation in the 
+         *  degenerate case
          * \retval POSITIVE if d(p0 hp0,q) < d(p3 hp3, q)
          * \retval NEGATIVE if d(p0 hp0,q) > d(p3 hp3, q)
          * \retval perturb() if d(p0 hp0,q) = d(p3 hp3, q),
@@ -432,7 +432,7 @@ namespace GEO {
         /**
          * \brief Computes the 3d orientation test with lifted points.
          * \details Given three lifted points p0', p1', p2' in 
-         *  R^3, tests if the lifted point p3' in R^3 lies below or above 
+         *  R^2, tests if the lifted point p3' in R^3 lies below or above 
          *  the plane passing through the three points 
          *  p0', p1', p2'.
          *  The first two coordinates and the
@@ -599,7 +599,22 @@ namespace GEO {
 	    const double* p0, const double* p1, const double* p2
 	);
 
-#ifndef GEOGRAM_PSM                
+#ifndef GEOGRAM_PSM
+
+	/**
+	 * \brief Tests whether three points are aligned.
+	 * \param[in] p0 , p1 , p2 the three points
+	 * \retval true if the three points are aligned.
+	 * \retval false otherwise.
+	 * \details Function to be tested, use points_are_colinear_3d()
+	 *  instead.
+	 */
+	inline bool aligned_3d(
+	    const vec3& p0, const vec3& p1, const vec3& p2
+	) {
+            return aligned_3d(p0.data(), p1.data(), p2.data());
+        }
+        
 	/**
 	 * \brief Computes the sign of the dot product between two
 	 *  vectors.

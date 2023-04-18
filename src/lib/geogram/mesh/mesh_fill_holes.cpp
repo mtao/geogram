@@ -504,13 +504,15 @@ namespace {
 
     /************************************************************************/
 
-    /**
+    /* // commented-out for now, see issue #72
      * \brief Removes all the facets of a mesh that are 
      *  on a bridge.
      * \details A facet is said to be on a bridge if it is
      *  incident to a border and if when turning around the
      *  border it is encountered more than once.
-     */
+     *
+     *
+     *
     void remove_bridges(Mesh& M) {
         MeshHalfedges MH(M);
         vector<bool> corner_is_visited(M.facet_corners.nb(),false);
@@ -558,7 +560,7 @@ namespace {
                 << std::endl;
         } 
     }
-    
+    */
 }
 
 /****************************************************************************/
@@ -569,13 +571,11 @@ namespace GEO {
 	Mesh& M, double max_area, index_t max_edges, bool repair
     ) {
 
-	// mesh_save(M, "before_fill_holes.geogram");
-	
         if(max_area == 0.0 || max_edges == 0) {
             return;
         }
 
-        remove_bridges(M);
+        // remove_bridges(M); // commented out for now, see issue #72
 
         MeshHalfedges MH(M);
 

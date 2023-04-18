@@ -388,7 +388,7 @@ namespace {
                     remove_f[f_sort[if2]] = 1;
                     // Used by boolean operations
                     if(operand_bit.is_bound()) {
-                        operand_bit[f_sort[if1]] |= operand_bit[f_sort[if2]];
+                        operand_bit[f_sort[if1]] ^= operand_bit[f_sort[if2]];
                     }
                     if2++;
                 }
@@ -459,9 +459,7 @@ namespace {
      *  orientations.
      * \param[in] M the mesh to repair
      */
-    void repair_connect_facets(
-        Mesh& M
-    ) {
+    void repair_connect_facets(Mesh& M) {
         const index_t NON_MANIFOLD=index_t(-2);
 
         // Reset all facet-facet adjacencies.

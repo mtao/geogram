@@ -379,14 +379,14 @@ END_IMGUI_FUNC
 IMGUI_FUNCTION(PopTextWrapPos)
 CALL_FUNCTION_NO_RET(PopTextWrapPos)
 END_IMGUI_FUNC
-//    IMGUI_API void          PushAllowKeyboardFocus(bool allow_keyboard_focus);              // allow focusing using TAB/Shift-TAB, enabled by default but you can disable it for certain widgets
-IMGUI_FUNCTION(PushAllowKeyboardFocus)
-BOOL_ARG(allow_keyboard_focus)
-CALL_FUNCTION_NO_RET(PushAllowKeyboardFocus, allow_keyboard_focus)
+//    IMGUI_API void          PushTabStop(bool tab_stop);              // allow focusing using TAB/Shift-TAB, enabled by default but you can disable it for certain widgets
+IMGUI_FUNCTION(PushTabStop)
+BOOL_ARG(tab_stop)
+CALL_FUNCTION_NO_RET(PushTabStop, tab_stop)
 END_IMGUI_FUNC
-//    IMGUI_API void          PopAllowKeyboardFocus();
-IMGUI_FUNCTION(PopAllowKeyboardFocus)
-CALL_FUNCTION_NO_RET(PopAllowKeyboardFocus)
+//    IMGUI_API void          PopTabStop();
+IMGUI_FUNCTION(PopTabStop)
+CALL_FUNCTION_NO_RET(PopTabStop)
 END_IMGUI_FUNC
 //    IMGUI_API void          PushButtonRepeat(bool repeat);                                  // in 'repeat' mode, Button*() functions return repeated true in a typematic manner (using io.KeyRepeatDelay/io.KeyRepeatRate setting). Note that you can call IsItemActive() after any Button() to tell if the button is held in the current frame.
 IMGUI_FUNCTION(PushButtonRepeat)
@@ -1136,10 +1136,11 @@ CALL_FUNCTION(MenuItem, bool, label, shortcut, p_selected, enabled)
 PUSH_BOOL(ret)
 END_BOOL_POINTER(p_selected)
 END_IMGUI_FUNC
-//    IMGUI_API void          BeginTooltip();                                                     // begin/append a tooltip window. to create full-featured tooltip (with any kind of items).
+//    IMGUI_API bool          BeginTooltip();                                                     // begin/append a tooltip window. to create full-featured tooltip (with any kind of items).
 IMGUI_FUNCTION(BeginTooltip)
-CALL_FUNCTION_NO_RET(BeginTooltip)
-ADD_END_STACK(10)
+CALL_FUNCTION(BeginTooltip, bool)
+IF_RET_ADD_END_STACK(11)
+PUSH_BOOL(ret)
 END_IMGUI_FUNC
 //    IMGUI_API void          EndTooltip();
 IMGUI_FUNCTION(EndTooltip)

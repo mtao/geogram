@@ -43,6 +43,8 @@
 #include <geogram/basic/command_line.h>
 #include <geogram/bibliography/bibliography.h>
 
+#include <geogram/mesh/mesh_io.h>
+
 #ifdef GEOGRAM_WITH_TETGEN
 
 namespace GEO {
@@ -140,7 +142,6 @@ namespace GEO {
                 << std::endl;
         }
 
-
         tetgen_out_.deinitialize();
 
         // Q: quiet
@@ -153,7 +154,8 @@ namespace GEO {
         // (first Y for exterior boundary, second Y for the
         // other ones).
         // AA: generate region tags for each shell.
-
+        // M: do not merge coplanar facets
+        
         std::string cmdline;
         if(refine_) {
             if(CmdLine::get_arg_bool("dbg:tetgen")) {
@@ -163,9 +165,9 @@ namespace GEO {
             }
         } else {
             if(CmdLine::get_arg_bool("dbg:tetgen")) {
-                cmdline = "VpnO0YYAA";
+                cmdline = "VpnO0YYAA"; 
             } else {
-                cmdline = "QpnO0YYAA";
+                cmdline = "QpnO0YYAA"; 
             }
         }
         tetgen_args_.parse_commandline(const_cast<char*>(cmdline.c_str()));
@@ -237,13 +239,17 @@ namespace GEO {
 
         bool there_was_an_error = false;
         int error_code = 0;
-        
+
         try {
             GEO_3rdParty::tetrahedralize(
                 &tetgen_args_, &tetgen_in_, &tetgen_out_
             );
         } catch(...) {
+            Logger::err("DelaunayTetgen")
+                << "Encountered a problem..."
+                << std::endl;
             there_was_an_error = true;
+            /*
             Logger::err("DelaunayTetgen")
                 << "Encountered a problem, relaunching in diagnose mode..."
                 << std::endl;
@@ -255,8 +261,10 @@ namespace GEO {
                 );
             } catch(...) {
             }
+            */
         }
 
+        
         // Deallocate the datastructures used by tetgen,
         // and disconnect them from tetgen,
         // so that tetgen does not try to deallocate them.
